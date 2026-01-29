@@ -2,7 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/lib/prisma";
-import { ADMIN_EMAILS } from "@/config/roles";
+import { ADMIN_EMAILS, EMPLOYEE_EMAILS } from "@/config/roles";
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -33,6 +33,16 @@ export const authOptions: NextAuthOptions = {
         strategy: "jwt",
     },
     callbacks: {
+        async signIn({ user }) {
+            if (!user.email) return false;
+
+            const isAllowed =
+                user.email === process.env.ADMIN_EMAIL ||
+                ADMIN_EMAILS.includes(user.email) ||
+                EMPLOYEE_EMAILS.includes(user.email);
+
+            return isAllowed;
+        },
         async jwt({ token, user, trigger, session }) {
             if (user) {
                 token.id = user.id;

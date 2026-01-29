@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, Calendar, Settings, TrendingDown, AlertTriangle, DollarSign } from "lucide-react";
+import { LayoutDashboard, Package, Calendar, Settings, TrendingDown, AlertTriangle, DollarSign, Users } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 const navigation = [
@@ -62,6 +62,12 @@ export default function SidebarContent() {
                             <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                                 Management
                             </p>
+                            {(session?.user as any)?.role === "admin" && (
+                                <Link href="/admin/users" className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${pathname === "/admin/users" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}>
+                                    <Users className="h-4 w-4" />
+                                    User Management
+                                </Link>
+                            )}
                             <Link href="/admin/swaps" className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${pathname === "/admin/swaps" ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}>
                                 <Package className="h-4 w-4" />
                                 Swap Requests
