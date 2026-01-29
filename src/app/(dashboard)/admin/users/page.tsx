@@ -1,9 +1,10 @@
 import Header from "@/components/layout/Header";
 import prisma from "@/lib/prisma";
-import { toggleUserStatus, updateUserRole } from "@/app/actions/admin";
+import { toggleUserStatus } from "@/app/actions/admin";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import RoleSelect from "@/components/admin/RoleSelect";
 
 export default async function UserManagementPage() {
     const session = await getServerSession(authOptions);
@@ -45,24 +46,7 @@ export default async function UserManagementPage() {
                                         </td>
                                         <td className="px-6 py-4">{user.email}</td>
                                         <td className="px-6 py-4">
-                                            <form action={async (formData) => {
-                                                "use server";
-                                                await updateUserRole(user.id, formData.get("role") as string, formData);
-                                            }}>
-                                                <select
-                                                    name="role"
-                                                    defaultValue={user.role}
-                                                    className="input py-1 text-xs w-32"
-                                                    onChange={(e) => e.target.form?.requestSubmit()} // Auto-submit on change (requires JS)
-                                                >
-                                                    <option value="employee">Employee</option>
-                                                    <option value="manager">Manager</option>
-                                                    <option value="admin">Admin</option>
-                                                </select>
-                                                <noscript>
-                                                    <button type="submit" className="ml-2 btn btn-xs btn-outline">Save</button>
-                                                </noscript>
-                                            </form>
+                                            <RoleSelect userId={user.id} currentRole={user.role} />
                                         </td>
                                         <td className="px-6 py-4">
                                             {user.active ? (
