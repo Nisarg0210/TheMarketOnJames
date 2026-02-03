@@ -1,3 +1,4 @@
+@import "./design-tokens.css";
 @import "tailwindcss";
 
 @theme {
@@ -42,6 +43,9 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  /* Minimum for mobile readability */
+  line-height: 1.5;
 }
 
 /* Utilities */
@@ -55,12 +59,26 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   font-weight: 500;
-  padding: 0.5rem 1rem;
-  transition: all 0.2s;
+  padding: 0.75rem 1.25rem;
+  /* Increased for better touch targets */
+  min-height: 44px;
+  /* WCAG minimum touch target */
+  transition: all var(--transition-base);
   cursor: pointer;
   border: 1px solid transparent;
+  touch-action: manipulation;
+  /* Prevents double-tap zoom on mobile */
+  user-select: none;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .btn {
+    padding: 0.5rem 1rem;
+    min-height: auto;
+  }
 }
 
 .btn-primary {
@@ -72,6 +90,10 @@ body {
   opacity: 0.9;
 }
 
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
 .btn-secondary {
   background-color: var(--secondary);
   color: var(--secondary-foreground);
@@ -79,6 +101,10 @@ body {
 
 .btn-secondary:hover {
   background-color: #cbd5e1;
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
 }
 
 .btn-outline {
@@ -91,26 +117,64 @@ body {
   color: var(--accent-foreground);
 }
 
+.btn-outline:active {
+  transform: scale(0.98);
+}
+
 .card {
   background-color: white;
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
 }
 
 .input {
   display: flex;
-  height: 2.5rem;
+  height: 44px;
+  /* Minimum touch target */
   width: 100%;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   border: 1px solid var(--input);
   background-color: white;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  /* 16px to prevent zoom on iOS */
+  touch-action: manipulation;
+}
+
+@media (min-width: 768px) {
+  .input {
+    height: 2.5rem;
+    font-size: 0.875rem;
+  }
 }
 
 .input:focus {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 767px) {
+
+  /* Ensure all interactive elements are at least 44px */
+  a,
+  button,
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent text size adjustment on orientation change */
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
 }

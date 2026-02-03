@@ -1,10 +1,10 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import BarcodeScanner from "@/components/inventory/BarcodeScanner";
 
 export default function ScannerPage() {
     return (
         <div className="space-y-6">
-            <Header title="Barcode Scanner" />
+            <PageTitle title="Barcode Scanner" />
             <BarcodeScanner />
         </div>
     );

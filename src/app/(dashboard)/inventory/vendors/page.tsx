@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import prisma from "@/lib/prisma";
 import { createVendor, deleteVendor } from "@/app/actions/vendors";
 import { Trash2 } from "lucide-react";
@@ -7,9 +7,9 @@ export default async function VendorsPage() {
     const vendors = await prisma.vendor.findMany({ orderBy: { name: "asc" } });
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-            <Header title="Inventory: Vendors" />
-            <div className="p-6 flex-1 space-y-6">
+        <>
+            <PageTitle title="Inventory: Vendors" />
+            <div className="p-4 md:p-6 flex-1 space-y-6 pb-20 md:pb-6">
 
                 <div className="card max-w-lg">
                     <h3 className="font-bold mb-4">Add New Vendor</h3>
@@ -64,6 +64,6 @@ export default async function VendorsPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

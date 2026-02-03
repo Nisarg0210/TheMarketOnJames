@@ -1,24 +1,22 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, forwardRef, useImperativeHandle } from "react";
 import SidebarContent from "./sidebar/SidebarContent";
 
-export default function Sidebar() {
+export interface SidebarHandle {
+    toggle: () => void;
+}
+
+const Sidebar = forwardRef<SidebarHandle>((props, ref) => {
     const [isOpen, setIsOpen] = useState(false);
+
+    useImperativeHandle(ref, () => ({
+        toggle: () => setIsOpen((prev) => !prev),
+    }));
 
     return (
         <>
-            {/* Mobile Toggle Button - Fixed to top left, visible only on mobile */}
-            <div className="fixed top-0 left-0 z-[60] p-3 md:hidden">
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="p-2.5 text-gray-900 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-gray-100 active:scale-90 transition-all"
-                >
-                    <Menu className="w-6 h-6" />
-                </button>
-            </div>
-
             {/* Desktop Sidebar - hidden on mobile, fixed width on desktop */}
             <aside className="hidden md:flex h-screen w-64 flex-col border-r bg-white fixed inset-y-0 z-30">
                 <SidebarContent />
@@ -46,7 +44,9 @@ export default function Sidebar() {
                                 <X className="h-6 w-6 text-white" aria-hidden="true" />
                             </button>
                         </div>
-                        <div className="h-full" onClick={() => setIsOpen(false)}> {/* Close on nav click */}
+                        <div className="h-full" onClick={() => setIsOpen(false)}>
+                            {" "}
+                            {/* Close on nav click */}
                             <SidebarContent />
                         </div>
                     </div>
@@ -54,4 +54,8 @@ export default function Sidebar() {
             )}
         </>
     );
-}
+});
+
+Sidebar.displayName = "Sidebar";
+
+export default Sidebar;

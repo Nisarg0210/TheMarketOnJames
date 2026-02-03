@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import Link from "next/link";
 import { ChevronLeft, Calendar } from "lucide-react";
 import ScheduleComments from "@/components/schedule/ScheduleComments";
@@ -60,8 +60,8 @@ export default async function ScheduleDetailPage({ params }: { params: Promise<{
     const totalWeekHours = days.reduce((acc, day) => acc + day.totalDayHours, 0);
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-            <Header title={`Schedule: ${format(schedule.weekStartDate, "MMM dd")}`} showSearch={false} />
+        <>
+            <PageTitle title={`Schedule: ${format(schedule.weekStartDate, "MMM dd")}`} showSearch={false} />
 
             <div className="p-4 md:p-6 lg:p-8 flex-1">
                 <div className="max-w-[1600px] mx-auto space-y-6 animate-in fade-in duration-500">
@@ -195,6 +195,6 @@ export default async function ScheduleDetailPage({ params }: { params: Promise<{
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

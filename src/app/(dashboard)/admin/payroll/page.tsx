@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import PayrollTable from "@/components/admin/PayrollTable";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -13,11 +13,11 @@ export default async function PayrollPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-            <Header title="Payroll & Hours Report" showSearch={false} />
+        <>
+            <PageTitle title="Payroll & Hours Report" showSearch={false} />
             <div className="p-6 flex-1">
                 <PayrollTable />
             </div>
-        </div>
+        </>
     );
 }

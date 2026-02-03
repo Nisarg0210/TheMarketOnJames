@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import prisma from "@/lib/prisma";
 import { addDays, startOfDay, isBefore, isAfter } from "date-fns";
 import { Package, AlertTriangle, Calendar, TrendingUp } from "lucide-react";
@@ -85,9 +85,9 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-      <Header title="Dashboard" />
-      <div className="p-6 flex-1 space-y-6">
+    <>
+      <PageTitle title="Dashboard" />
+      <div className="p-4 md:p-6 flex-1 space-y-6 pb-20 md:pb-6">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => {
@@ -215,6 +215,6 @@ export default async function DashboardPage() {
           </Link>
         </div>
       </div>
-    </div>
+    </>
   );
 }

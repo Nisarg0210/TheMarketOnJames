@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { MapPin } from "lucide-react";
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 
 export default function SettingsPage() {
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-            <Header title="Settings" showSearch={false} />
-            <div className="p-6 flex-1 space-y-6">
+        <>
+            <PageTitle title="Settings" showSearch={false} />
+            <div className="p-4 md:p-6 flex-1 space-y-6 pb-20 md:pb-6">
                 <h1 className="text-2xl font-bold tracking-tight">Settings Overview</h1>
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -23,6 +23,6 @@ export default function SettingsPage() {
                     </Link>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

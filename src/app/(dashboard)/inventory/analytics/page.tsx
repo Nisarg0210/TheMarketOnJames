@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import AnalyticsDashboard from "@/components/inventory/analytics/AnalyticsDashboard";
 import { getInventoryAnalytics } from "@/app/actions/analytics";
 
@@ -6,9 +6,9 @@ export default async function AnalyticsPage() {
     const data = await getInventoryAnalytics();
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-            <Header title="Inventory: Analytics" />
-            <div className="p-6 flex-1 space-y-6">
+        <>
+            <PageTitle title="Inventory: Analytics" />
+            <div className="p-4 md:p-6 flex-1 space-y-6 pb-20 md:pb-6">
                 <AnalyticsDashboard data={data} />
 
                 <div className="card p-6">
@@ -19,6 +19,6 @@ export default async function AnalyticsPage() {
                     </p>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

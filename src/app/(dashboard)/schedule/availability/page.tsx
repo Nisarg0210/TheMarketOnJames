@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import AvailabilityForm from "@/components/schedule/AvailabilityForm";
 import StaffAvailabilityList from "@/components/schedule/StaffAvailabilityList";
 import prisma from "@/lib/prisma";
@@ -33,8 +33,8 @@ export default async function AvailabilityPage() {
         });
 
         return (
-            <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-                <Header title="Staff Availability" />
+            <>
+                <PageTitle title="Staff Availability" />
                 <div className="p-6 md:p-8 space-y-6">
                     <div className="bg-white border border-gray-100 p-6 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
@@ -50,7 +50,7 @@ export default async function AvailabilityPage() {
                     </div>
                     <StaffAvailabilityList availabilities={allAvailability as any} />
                 </div>
-            </div>
+            </>
         );
     }
 
@@ -65,8 +65,8 @@ export default async function AvailabilityPage() {
     });
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-            <Header title="My Availability" />
+        <>
+            <PageTitle title="My Availability" />
             <div className="max-w-4xl mx-auto w-full p-6 md:p-8">
                 <div className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/10 p-8 rounded-[2.5rem] mb-8 shadow-sm">
                     <div className="flex items-start gap-4">
@@ -84,6 +84,6 @@ export default async function AvailabilityPage() {
                 </div>
                 <AvailabilityForm initialAvailability={availability as any} />
             </div>
-        </div>
+        </>
     );
 }

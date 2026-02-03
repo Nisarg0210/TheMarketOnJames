@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import prisma from "@/lib/prisma";
 import { format, differenceInDays } from "date-fns";
 
@@ -39,9 +39,9 @@ export default async function ExpiryPage() {
     );
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-            <Header title="Inventory: Expiry Tracking" />
-            <div className="p-6 flex-1 space-y-6">
+        <>
+            <PageTitle title="Inventory: Expiry Tracking" />
+            <div className="p-4 md:p-6 flex-1 space-y-6 pb-20 md:pb-6">
 
                 <div className="space-y-8">
                     {/* Expired Section */}
@@ -57,23 +57,23 @@ export default async function ExpiryPage() {
                                 <table className="w-full text-sm text-left">
                                     <thead className="bg-red-50 text-red-900 uppercase">
                                         <tr>
-                                            <th className="px-6 py-3">Product</th>
-                                            <th className="px-6 py-3">Category</th>
-                                            <th className="px-6 py-3">Quantity</th>
-                                            <th className="px-6 py-3">Expiry Date</th>
-                                            <th className="px-6 py-3">Status</th>
+                                            <th className="px-4 md:px-6 py-3">Product</th>
+                                            <th className="px-4 md:px-6 py-3">Category</th>
+                                            <th className="px-4 md:px-6 py-3">Quantity</th>
+                                            <th className="px-4 md:px-6 py-3">Expiry Date</th>
+                                            <th className="px-4 md:px-6 py-3">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {expired.map((batch) => (
                                             <tr key={batch.id} className="border-b hover:bg-red-50/50">
-                                                <td className="px-6 py-4 font-medium">{batch.product.name}</td>
-                                                <td className="px-6 py-4">{batch.product.category.name}</td>
-                                                <td className="px-6 py-4">{batch.qty}</td>
-                                                <td className="px-6 py-4 font-bold text-red-600">
+                                                <td className="px-4 md:px-6 py-4 font-medium">{batch.product.name}</td>
+                                                <td className="px-4 md:px-6 py-4">{batch.product.category.name}</td>
+                                                <td className="px-4 md:px-6 py-4">{batch.qty}</td>
+                                                <td className="px-4 md:px-6 py-4 font-bold text-red-600">
                                                     {batch.expiryDate ? format(new Date(batch.expiryDate), "MMM dd, yyyy") : "-"}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-4 md:px-6 py-4">
                                                     <span className="px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">
                                                         EXPIRED
                                                     </span>
@@ -82,7 +82,7 @@ export default async function ExpiryPage() {
                                         ))}
                                         {expired.length === 0 && (
                                             <tr>
-                                                <td colSpan={5} className="px-6 py-4 text-center text-muted-foreground">
+                                                <td colSpan={5} className="px-4 md:px-6 py-4 text-center text-muted-foreground">
                                                     No expired items found. Good job!
                                                 </td>
                                             </tr>
@@ -106,11 +106,11 @@ export default async function ExpiryPage() {
                                 <table className="w-full text-sm text-left">
                                     <thead className="bg-yellow-50 text-yellow-900 uppercase">
                                         <tr>
-                                            <th className="px-6 py-3">Product</th>
-                                            <th className="px-6 py-3">Category</th>
-                                            <th className="px-6 py-3">Quantity</th>
-                                            <th className="px-6 py-3">Expiry Date</th>
-                                            <th className="px-6 py-3">Days Left</th>
+                                            <th className="px-4 md:px-6 py-3">Product</th>
+                                            <th className="px-4 md:px-6 py-3">Category</th>
+                                            <th className="px-4 md:px-6 py-3">Quantity</th>
+                                            <th className="px-4 md:px-6 py-3">Expiry Date</th>
+                                            <th className="px-4 md:px-6 py-3">Days Left</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -120,13 +120,13 @@ export default async function ExpiryPage() {
                                                 : 0;
                                             return (
                                                 <tr key={batch.id} className="border-b hover:bg-yellow-50/50">
-                                                    <td className="px-6 py-4 font-medium">{batch.product.name}</td>
-                                                    <td className="px-6 py-4">{batch.product.category.name}</td>
-                                                    <td className="px-6 py-4">{batch.qty}</td>
-                                                    <td className="px-6 py-4">
+                                                    <td className="px-4 md:px-6 py-4 font-medium">{batch.product.name}</td>
+                                                    <td className="px-4 md:px-6 py-4">{batch.product.category.name}</td>
+                                                    <td className="px-4 md:px-6 py-4">{batch.qty}</td>
+                                                    <td className="px-4 md:px-6 py-4">
                                                         {batch.expiryDate ? format(new Date(batch.expiryDate), "MMM dd, yyyy") : "-"}
                                                     </td>
-                                                    <td className="px-6 py-4">
+                                                    <td className="px-4 md:px-6 py-4">
                                                         <span
                                                             className={`px-2 py-1 rounded-full text-xs font-semibold ${daysLeft <= 3
                                                                 ? "bg-orange-100 text-orange-700"
@@ -141,7 +141,7 @@ export default async function ExpiryPage() {
                                         })}
                                         {expiringSoon.length === 0 && (
                                             <tr>
-                                                <td colSpan={5} className="px-6 py-4 text-center text-muted-foreground">
+                                                <td colSpan={5} className="px-4 md:px-6 py-4 text-center text-muted-foreground">
                                                     No items expiring soon.
                                                 </td>
                                             </tr>
@@ -153,6 +153,6 @@ export default async function ExpiryPage() {
                     </section>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -30,7 +30,7 @@ export default async function MyShiftsPage() {
 
     return (
         <div className="space-y-6">
-            <Header title="My Upcoming Shifts" />
+            <PageTitle title="My Upcoming Shifts" />
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {shifts.length === 0 ? (

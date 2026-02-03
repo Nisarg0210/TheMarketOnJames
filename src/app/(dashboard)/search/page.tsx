@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 
@@ -21,7 +21,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q: 
 
     return (
         <div className="space-y-6">
-            <Header title={`Search Results for "${query}"`} />
+            <PageTitle title={`Search Results for "${query}"`} />
 
             <div className="card">
                 <h3 className="font-semibold mb-4">Products ({products.length})</h3>

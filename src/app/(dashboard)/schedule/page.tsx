@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { format } from "date-fns";
@@ -20,9 +20,9 @@ export default async function ScheduleListPage() {
     });
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
+        <>
             <AutoEnsureSchedule isAdmin={isAdmin} />
-            <Header title="Staff Schedules" showSearch={false} />
+            <PageTitle title="Staff Schedules" showSearch={false} />
 
             <div className="p-6">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -122,6 +122,6 @@ export default async function ScheduleListPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

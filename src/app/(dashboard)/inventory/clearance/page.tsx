@@ -1,4 +1,4 @@
-import Header from "@/components/layout/Header";
+import PageTitle from "@/components/layout/PageTitle";
 import { getClearanceItems } from "@/app/actions/analytics";
 import { format, differenceInDays } from "date-fns";
 
@@ -7,10 +7,10 @@ export default async function ClearancePage() {
     const today = new Date();
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col pb-12">
-            <Header title="Inventory: Clearance" />
+        <>
+            <PageTitle title="Inventory: Clearance" />
 
-            <div className="p-6 flex-1 space-y-6">
+            <div className="p-4 md:p-6 flex-1 space-y-6 pb-20 md:pb-6">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
                     <div>
                         <h1 className="text-xl font-bold text-gray-900 tracking-tight">Clearance List</h1>
@@ -32,17 +32,17 @@ export default async function ClearancePage() {
                         <table className="w-full text-left border-collapse">
                             <thead>
                                 <tr className="bg-gray-50/50 border-b border-gray-100">
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Product</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Qty</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Expiry Date</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Time Remaining</th>
-                                    <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th className="px-4 md:px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Product</th>
+                                    <th className="px-4 md:px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-center">Qty</th>
+                                    <th className="px-4 md:px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Expiry Date</th>
+                                    <th className="px-4 md:px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Time Remaining</th>
+                                    <th className="px-4 md:px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
                                 {items.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center text-gray-400 italic">
+                                        <td colSpan={5} className="px-4 md:px-6 py-12 text-center text-gray-400 italic">
                                             No clearance items found. All inventory is within safe dates.
                                         </td>
                                     </tr>
@@ -68,21 +68,21 @@ export default async function ClearancePage() {
 
                                         return (
                                             <tr key={item.id} className="hover:bg-gray-50/50 transition-colors group">
-                                                <td className="px-6 py-4">
+                                                <td className="px-4 md:px-6 py-4">
                                                     <div className="font-semibold text-gray-900 group-hover:text-primary transition-colors">
                                                         {item.product.name}
                                                     </div>
                                                     <div className="text-xs text-gray-400">ID: {item.product.id.slice(-6).toUpperCase()}</div>
                                                 </td>
-                                                <td className="px-6 py-4 text-center">
+                                                <td className="px-4 md:px-6 py-4 text-center">
                                                     <span className="inline-flex items-center justify-center min-w-[2.5rem] h-8 rounded-lg bg-gray-100 text-gray-700 font-bold text-sm">
                                                         {item.qty}
                                                     </span>
                                                 </td>
-                                                <td className="px-6 py-4 text-sm text-gray-600">
+                                                <td className="px-4 md:px-6 py-4 text-sm text-gray-600">
                                                     {item.expiryDate ? format(new Date(item.expiryDate), "MMMM dd, yyyy") : "—"}
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-4 md:px-6 py-4">
                                                     <div className={`text-sm font-bold ${daysLeft < 0 ? 'text-red-600' : daysLeft <= 7 ? 'text-orange-600' : 'text-gray-700'}`}>
                                                         {daysLeft < 0
                                                             ? `${Math.abs(daysLeft)} days overdue`
@@ -98,7 +98,7 @@ export default async function ClearancePage() {
                                                         ></div>
                                                     </div>
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="px-4 md:px-6 py-4">
                                                     <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
                                                         <span className={`h-1.5 w-1.5 rounded-full ${statusConfig.dot}`}></span>
                                                         {statusConfig.label}
@@ -113,6 +113,6 @@ export default async function ClearancePage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
