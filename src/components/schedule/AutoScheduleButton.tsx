@@ -24,10 +24,10 @@ export default function AutoScheduleButton() {
         <button
             onClick={handleAutoCreate}
             disabled={loading}
-            className="btn btn-outline btn-sm flex items-center gap-2"
+            className="btn btn-outline w-full flex items-center justify-center gap-2 text-sm md:text-base whitespace-nowrap overflow-hidden"
         >
-            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 text-amber-500" />}
-            Auto-Generate Next Week
+            {loading ? <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" /> : <Sparkles className="w-4 h-4 text-amber-500 flex-shrink-0" />}
+            <span className="truncate">Auto-Generate Next Week</span>
         </button>
     );
 }

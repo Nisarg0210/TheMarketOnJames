@@ -101,40 +101,49 @@ export default async function ScheduleDetailPage({ params }: { params: Promise<{
                         </div>
                     </div>
 
-                    {/* Schedule Grid with Horizontal Scroll protection */}
-                    <div className="overflow-x-auto pb-6 -mx-4 px-4 scrollbar-hide snap-x snap-mandatory">
-                        <div className="grid grid-cols-1 md:grid-cols-7 gap-4 min-w-[1400px] md:min-w-0">
+
+                    {/* Schedule Grid - Mobile Accordion / Desktop Grid */}
+                    <div className="space-y-4">
+                        {/* Mobile: Vertical Accordion */}
+                        <div className="md:hidden space-y-3">
                             {days.map((day) => {
                                 const dayShifts = schedule.shifts.filter(s => isSameDay(new Date(s.date), day.date));
                                 const isToday = isSameDay(day.date, new Date());
 
                                 return (
-                                    <div key={day.label} className={`flex flex-col h-full bg-white/50 backdrop-blur-sm rounded-2xl border transition-all snap-center ${isToday ? 'border-primary ring-4 ring-primary/5 shadow-2xl shadow-primary/10' : 'border-gray-100'}`}>
-                                        <div className={`p-4 text-center border-b ${isToday ? 'bg-gradient-to-b from-primary/5 to-transparent' : 'bg-gray-50/10'} rounded-t-2xl`}>
-                                            <p className={`font-bold tracking-tight text-sm ${isToday ? 'text-primary' : 'text-gray-900'}`}>{day.label}</p>
-                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{day.subLabel}</p>
-                                            {day.totalDayHours > 0 && (
-                                                <div className="inline-block mt-2 px-2 py-0.5 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-bold border border-blue-100">
-                                                    {formatHours(day.totalDayHours).toUpperCase()}
-                                                </div>
-                                            )}
-                                        </div>
+                                    <details key={day.label} className={`group bg-white rounded-2xl border transition-all ${isToday ? 'border-primary ring-2 ring-primary/10' : 'border-gray-100'}`} open={isToday}>
+                                        <summary className={`cursor-pointer list-none p-4 ${isToday ? 'bg-gradient-to-b from-primary/5 to-transparent' : 'bg-gray-50/50'} rounded-t-2xl flex items-center justify-between`}>
+                                            <div className="flex-1">
+                                                <p className={`font-bold text-base ${isToday ? 'text-primary' : 'text-gray-900'}`}>{day.label}</p>
+                                                <p className="text-xs text-gray-500 mt-0.5">{day.subLabel}</p>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                {day.totalDayHours > 0 && (
+                                                    <div className="px-2 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold border border-blue-100">
+                                                        {formatHours(day.totalDayHours)}
+                                                    </div>
+                                                )}
+                                                <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                                                </svg>
+                                            </div>
+                                        </summary>
 
-                                        <div className="p-3 flex-1 space-y-3 min-h-[500px]">
+                                        <div className="p-3 space-y-3 border-t border-gray-100">
                                             {dayShifts.map(shift => (
-                                                <div key={shift.id} className="p-4 bg-white border border-gray-100 rounded-xl relative group hover:shadow-xl hover:shadow-primary/5 transition-all hover:border-primary/20 flex flex-col gap-2">
+                                                <div key={shift.id} className="p-3 bg-gray-50 border border-gray-100 rounded-xl relative group/shift hover:shadow-md transition-all flex flex-col gap-2">
                                                     <div className="flex justify-between items-start pr-6">
-                                                        <div className="font-semibold text-gray-900 text-sm tracking-tight truncate leading-none mb-1">
+                                                        <div className="font-semibold text-gray-900 text-sm">
                                                             {shift.user.name || "Unknown"}
                                                         </div>
                                                         {isAdmin && (
-                                                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                            <div className="absolute top-2 right-2 opacity-0 group-hover/shift:opacity-100 transition-opacity">
                                                                 <DeleteShiftButton shiftId={shift.id} scheduleId={schedule.id} />
                                                             </div>
                                                         )}
                                                     </div>
 
-                                                    <div className="flex flex-col gap-1.5 pt-1">
+                                                    <div className="flex flex-col gap-1.5">
                                                         <div className="text-primary font-bold text-xs">
                                                             {shift.startTime} - {shift.endTime}
                                                         </div>
@@ -148,35 +157,114 @@ export default async function ScheduleDetailPage({ params }: { params: Promise<{
                                                     </div>
 
                                                     {shift.notes && (
-                                                        <div className="mt-1 text-[10px] leading-relaxed text-gray-400 italic bg-gray-50 p-2 rounded-xl border border-gray-100 line-clamp-2" title={shift.notes}>
-                                                            &ldquo;{shift.notes}&rdquo;
+                                                        <div className="mt-1 text-xs text-gray-500 italic bg-white p-2 rounded-lg border border-gray-100">
+                                                            "{shift.notes}"
                                                         </div>
                                                     )}
                                                 </div>
                                             ))}
 
                                             {dayShifts.length === 0 && (
-                                                <div className="flex items-center justify-center py-12 text-center">
+                                                <div className="flex items-center justify-center py-8 text-center">
                                                     <div className="space-y-2">
-                                                        <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center mx-auto opacity-40">
+                                                        <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
                                                             <Calendar className="w-5 h-5 text-gray-400" />
                                                         </div>
-                                                        <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Rest Day</p>
+                                                        <p className="text-xs font-bold text-gray-400 uppercase">Rest Day</p>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {isAdmin && (
+                                                <div className="pt-2">
+                                                    <div className="p-2 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                                                        <ShiftForm scheduleId={schedule.id} date={day.date} users={users} />
                                                     </div>
                                                 </div>
                                             )}
                                         </div>
-
-                                        {isAdmin && (
-                                            <div className="p-3 pt-0">
-                                                <div className="p-1 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
-                                                    <ShiftForm scheduleId={schedule.id} date={day.date} users={users} />
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
+                                    </details>
                                 );
                             })}
+                        </div>
+
+                        {/* Desktop: Horizontal Grid */}
+                        <div className="hidden md:block overflow-x-auto pb-6 -mx-4 px-4">
+                            <div className="grid grid-cols-7 gap-4 min-w-[1400px] lg:min-w-0">
+                                {days.map((day) => {
+                                    const dayShifts = schedule.shifts.filter(s => isSameDay(new Date(s.date), day.date));
+                                    const isToday = isSameDay(day.date, new Date());
+
+                                    return (
+                                        <div key={day.label} className={`flex flex-col h-full bg-white/50 backdrop-blur-sm rounded-2xl border transition-all ${isToday ? 'border-primary ring-4 ring-primary/5 shadow-2xl shadow-primary/10' : 'border-gray-100'}`}>
+                                            <div className={`p-4 text-center border-b ${isToday ? 'bg-gradient-to-b from-primary/5 to-transparent' : 'bg-gray-50/10'} rounded-t-2xl`}>
+                                                <p className={`font-bold tracking-tight text-sm ${isToday ? 'text-primary' : 'text-gray-900'}`}>{day.label}</p>
+                                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{day.subLabel}</p>
+                                                {day.totalDayHours > 0 && (
+                                                    <div className="inline-block mt-2 px-2 py-0.5 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-bold border border-blue-100">
+                                                        {formatHours(day.totalDayHours).toUpperCase()}
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            <div className="p-3 flex-1 space-y-3 min-h-[500px]">
+                                                {dayShifts.map(shift => (
+                                                    <div key={shift.id} className="p-4 bg-white border border-gray-100 rounded-xl relative group hover:shadow-xl hover:shadow-primary/5 transition-all hover:border-primary/20 flex flex-col gap-2">
+                                                        <div className="flex justify-between items-start pr-6">
+                                                            <div className="font-semibold text-gray-900 text-sm tracking-tight truncate leading-none mb-1">
+                                                                {shift.user.name || "Unknown"}
+                                                            </div>
+                                                            {isAdmin && (
+                                                                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                    <DeleteShiftButton shiftId={shift.id} scheduleId={schedule.id} />
+                                                                </div>
+                                                            )}
+                                                        </div>
+
+                                                        <div className="flex flex-col gap-1.5 pt-1">
+                                                            <div className="text-primary font-bold text-xs">
+                                                                {shift.startTime} - {shift.endTime}
+                                                            </div>
+                                                            <ShiftHours
+                                                                shiftId={shift.id}
+                                                                startTime={shift.startTime}
+                                                                endTime={shift.endTime}
+                                                                actualHours={shift.actualHours}
+                                                                isAdmin={isAdmin}
+                                                            />
+                                                        </div>
+
+                                                        {shift.notes && (
+                                                            <div className="mt-1 text-[10px] leading-relaxed text-gray-400 italic bg-gray-50 p-2 rounded-xl border border-gray-100 line-clamp-2" title={shift.notes}>
+                                                                &ldquo;{shift.notes}&rdquo;
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
+
+                                                {dayShifts.length === 0 && (
+                                                    <div className="flex items-center justify-center py-12 text-center">
+                                                        <div className="space-y-2">
+                                                            <div className="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center mx-auto opacity-40">
+                                                                <Calendar className="w-5 h-5 text-gray-400" />
+                                                            </div>
+                                                            <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Rest Day</p>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {isAdmin && (
+                                                <div className="p-3 pt-0">
+                                                    <div className="p-1 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200">
+                                                        <ShiftForm scheduleId={schedule.id} date={day.date} users={users} />
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
 

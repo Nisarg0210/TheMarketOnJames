@@ -1,8 +1,15 @@
+"use client";
+
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { MapPin, LogOut } from "lucide-react";
 import PageTitle from "@/components/layout/PageTitle";
+import { signOut } from "next-auth/react";
 
 export default function SettingsPage() {
+    const handleLogout = () => {
+        signOut({ callbackUrl: '/auth/signin' });
+    };
+
     return (
         <>
             <PageTitle title="Settings" showSearch={false} />
@@ -21,6 +28,21 @@ export default function SettingsPage() {
                             </div>
                         </div>
                     </Link>
+
+                    <button
+                        onClick={handleLogout}
+                        className="block p-6 bg-white border rounded-lg shadow-sm hover:border-red-500 hover:shadow-md transition-all text-left w-full"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="p-2 bg-red-100 rounded-lg text-red-600">
+                                <LogOut className="h-6 w-6" />
+                            </div>
+                            <div>
+                                <h2 className="font-semibold text-gray-900">Logout</h2>
+                                <p className="text-sm text-gray-500">Sign out of your account</p>
+                            </div>
+                        </div>
+                    </button>
                 </div>
             </div>
         </>

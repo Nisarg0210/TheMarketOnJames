@@ -29,8 +29,8 @@ export default function Header({ onMenuClick }: HeaderProps) {
                 </button>
 
                 {/* Page Title */}
-                <h1 className="text-base md:text-lg font-bold text-gray-900 truncate">
-                    {title}
+                <h1 className="text-base md:text-lg font-bold text-gray-900 truncate flex-1 md:flex-initial">
+                    {title || "Dashboard"}
                 </h1>
 
                 {/* Search - Hidden on mobile, visible on desktop */}
@@ -56,8 +56,8 @@ export default function Header({ onMenuClick }: HeaderProps) {
                             </span>
                             <span
                                 className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium capitalize ${(session.user as any).role === "admin"
-                                        ? "bg-red-100 text-red-800"
-                                        : "bg-blue-100 text-blue-800"
+                                    ? "bg-red-100 text-red-800"
+                                    : "bg-blue-100 text-blue-800"
                                     }`}
                             >
                                 {(session.user as any).role || "Employee"}
@@ -69,8 +69,8 @@ export default function Header({ onMenuClick }: HeaderProps) {
                             {session.user.name?.[0]?.toUpperCase() || "U"}
                         </div>
 
-                        {/* Sign Out Button - Hidden on small mobile */}
-                        <div className="hidden sm:block">
+                        {/* Sign Out Button - Always visible for quick access on mobile */}
+                        <div className="block">
                             <SignOutButton />
                         </div>
                     </div>

@@ -24,22 +24,22 @@ export default async function ScheduleListPage() {
             <AutoEnsureSchedule isAdmin={isAdmin} />
             <PageTitle title="Staff Schedules" showSearch={false} />
 
-            <div className="p-6">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="p-4 md:p-6 pb-20 md:pb-6">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     {/* Create Form */}
                     <div className="lg:col-span-4 h-fit">
-                        <div className="card bg-white/50 backdrop-blur-sm border shadow-xl shadow-gray-200/50 p-6 rounded-2xl sticky top-24">
-                            <div className="flex flex-col gap-4 mb-6">
-                                <h3 className="font-bold text-xl text-gray-900">Manage Schedules</h3>
+                        <div className="card bg-white border shadow-sm p-4 md:p-6 rounded-2xl lg:sticky lg:top-24">
+                            <div className="flex flex-col gap-3 mb-4">
+                                <h3 className="font-bold text-lg md:text-xl text-gray-900">Manage Schedules</h3>
                                 {isAdmin && <AutoScheduleButton />}
                             </div>
-                            <form action={createSchedule} className="space-y-6">
+                            <form action={createSchedule} className="space-y-4">
                                 <div>
                                     <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Week Start Date (Monday)</label>
                                     <input
                                         type="date"
                                         name="weekStartDate"
-                                        className="input w-full bg-white h-12 rounded-xl border-gray-200 focus:ring-4 focus:ring-primary/10 transition-all font-medium"
+                                        className="input w-full bg-white rounded-xl border-gray-200 focus:ring-4 focus:ring-primary/10 transition-all font-medium"
                                         required
                                     />
                                     <p className="text-[10px] text-gray-400 mt-2 flex items-center gap-1">
@@ -47,7 +47,7 @@ export default async function ScheduleListPage() {
                                         Please select a Monday to start the week.
                                     </p>
                                 </div>
-                                <button type="submit" className="btn btn-primary w-full h-12 rounded-xl font-bold shadow-lg shadow-primary/20">
+                                <button type="submit" className="btn btn-primary w-full rounded-xl font-bold shadow-lg shadow-primary/20">
                                     Create Draft Schedule
                                 </button>
                             </form>
@@ -62,20 +62,20 @@ export default async function ScheduleListPage() {
                         </div>
                         <div className="grid grid-cols-1 gap-4">
                             {schedules.map((schedule) => (
-                                <div key={schedule.id} className="relative group bg-white border rounded-2xl shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all overflow-hidden flex items-stretch">
+                                <div key={schedule.id} className="relative group bg-white border rounded-2xl shadow-sm hover:shadow-xl hover:shadow-primary/5 transition-all overflow-hidden flex flex-col md:flex-row md:items-stretch">
                                     <Link
                                         href={`/schedule/${schedule.id}`}
-                                        className="flex-1 flex items-center justify-between p-5 pr-4 hover:bg-gray-50/5 transition-colors"
+                                        className="flex-1 flex flex-col md:flex-row md:items-center md:justify-between p-4 md:p-5 hover:bg-gray-50/5 transition-colors gap-3"
                                     >
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
-                                                <Calendar className="w-6 h-6" />
+                                        <div className="flex items-center gap-3 md:gap-4 min-w-0 flex-1">
+                                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 flex-shrink-0">
+                                                <Calendar className="w-5 h-5 md:w-6 md:h-6" />
                                             </div>
-                                            <div>
-                                                <h4 className="font-bold text-gray-900">
+                                            <div className="min-w-0 flex-1">
+                                                <h4 className="font-bold text-gray-900 text-sm md:text-base truncate">
                                                     Week of {format(new Date(schedule.weekStartDate), "MMMM dd, yyyy")}
                                                 </h4>
-                                                <div className="flex items-center gap-3 mt-1">
+                                                <div className="flex items-center gap-2 md:gap-3 mt-1 flex-wrap">
                                                     <p className="text-xs font-medium text-gray-500">
                                                         {schedule._count.shifts} shifts assigned
                                                     </p>
@@ -90,16 +90,16 @@ export default async function ScheduleListPage() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-4 pr-4">
-                                            <span className="bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-2 rounded-lg group-hover:scale-110 active:scale-95 transition-transform duration-200 shadow-md">
+                                        <div className="flex items-center justify-end md:justify-center flex-shrink-0">
+                                            <span className="bg-blue-600 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-lg group-hover:scale-105 active:scale-95 transition-transform duration-200 shadow-md whitespace-nowrap">
                                                 View Details
                                             </span>
                                         </div>
                                     </Link>
 
                                     {isAdmin && (
-                                        <div className="border-l border-gray-100 flex items-center justify-center bg-gray-50/30 group-hover:bg-white transition-colors">
-                                            <div className="px-4">
+                                        <div className="border-t md:border-t-0 md:border-l border-gray-100 flex items-center justify-center bg-gray-50/30 group-hover:bg-white transition-colors">
+                                            <div className="px-4 py-3 md:py-0">
                                                 <DeleteScheduleButton
                                                     scheduleId={schedule.id}
                                                     weekLabel={format(new Date(schedule.weekStartDate), "MMM dd")}
