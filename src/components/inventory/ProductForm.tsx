@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { createProduct } from "@/app/actions/inventory";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2, CheckCircle2, Scan } from "lucide-react";
+import MobileScannerModal from "./MobileScannerModal";
 
 interface Category {
     id: string;
@@ -14,6 +15,13 @@ export default function ProductForm({ categories }: { categories: Category[] }) 
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
     const [trackExpiry, setTrackExpiry] = useState(false);
+    const [isScannerOpen, setIsScannerOpen] = useState(false);
+    const [scannedSku, setScannedSku] = useState("");
+
+    const handleScan = (code: string) => {
+        setScannedSku(code);
+        // Also update the input value directly if needed, but react state should handle it
+    };
 
     async function handleSubmit(formData: FormData) {
         setLoading(true);
@@ -107,13 +115,26 @@ export default function ProductForm({ categories }: { categories: Category[] }) 
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium mb-1">SKU / Barcode</label>
-                        <input
-                            type="text"
-                            name="sku"
-                            className="input"
-                            placeholder="Optional"
-                            disabled={loading}
-                        />
+                        <div className="flex gap-2">
+                            <input
+                                type="text"
+                                name="sku"
+                                className="input"
+                                placeholder="Optional"
+                                disabled={loading}
+                                value={scannedSku}
+                                onChange={(e) => setScannedSku(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setIsScannerOpen(true)}
+                                className="btn btn-outline px-3"
+                                title="Scan Barcode"
+                                disabled={loading}
+                            >
+                                <Scan className="w-5 h-5" />
+                            </button>
+                        </div>
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">Min Stock Alert</label>
@@ -145,6 +166,12 @@ export default function ProductForm({ categories }: { categories: Category[] }) 
                     {loading ? <Loader2 className="animate-spin w-4 h-4" /> : "Create Product"}
                 </button>
             </form>
+
+            <MobileScannerModal
+                isOpen={isScannerOpen}
+                onClose={() => setIsScannerOpen(false)}
+                onScan={handleScan}
+            />
         </div>
     );
 }
