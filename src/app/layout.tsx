@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import AuthProvider from "@/components/providers/AuthProvider";
-import ServiceWorkerRegister from "@/components/providers/ServiceWorkerRegister";
+import PWAInit from "@/components/pwa/PWAInit";
 import ErrorBoundary from "@/components/providers/ErrorBoundary";
 import "./globals.css";
 
@@ -13,13 +13,16 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "The Market ON - Internal",
-  description: "Internal inventory and scheduling system",
+  title: "The Market ON",
+  description: "Internal inventory and staff management system",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     title: "Market ON",
+  },
+  formatDetection: {
+    telephone: false,
   },
 };
 
@@ -34,7 +37,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <AuthProvider>
             {children}
-            <ServiceWorkerRegister />
+            <PWAInit />
           </AuthProvider>
         </ErrorBoundary>
       </body>

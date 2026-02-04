@@ -1,40 +1,57 @@
 "use client";
 
-import { WifiOff } from "lucide-react";
 import Link from "next/link";
+import { WifiOff, RefreshCw, Home } from "lucide-react";
 
 export default function OfflinePage() {
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6 text-center">
-            <div className="max-w-md w-full animate-in fade-in zoom-in duration-500">
-                <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl shadow-gray-200">
-                    <WifiOff className="w-10 h-10 text-gray-300" />
+        <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gray-50 text-center">
+            <div className="p-6 bg-white rounded-3xl shadow-xl w-full max-w-sm space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
+                    <WifiOff className="w-10 h-10 text-gray-400" />
                 </div>
 
-                <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-4">You&apos;re Offline</h1>
+                <div className="space-y-2">
+                    <h1 className="text-2xl font-bold text-gray-900">You are offline</h1>
+                    <p className="text-gray-500">
+                        Check your internet connection to access the full features of Market ON.
+                    </p>
+                </div>
 
-                <p className="text-gray-500 font-medium mb-12 leading-relaxed">
-                    It looks like you don&apos;t have an active internet connection.
-                    Don&apos;t worry, your last viewed schedule might still be available
-                    in your offline data.
-                </p>
+                <div className="p-4 bg-amber-50 rounded-xl border border-amber-100 text-left">
+                    <p className="text-xs font-semibold text-amber-700 uppercase mb-2">
+                        Available Offline
+                    </p>
+                    <ul className="space-y-2 text-sm text-amber-800">
+                        <li className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-amber-500 rounded-full" />
+                            View previously loaded schedules
+                        </li>
+                        <li className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 bg-amber-500 rounded-full" />
+                            View categories list
+                        </li>
+                    </ul>
+                </div>
 
-                <div className="space-y-4">
-                    <Link
-                        href="/schedule/my-shifts"
-                        className="block w-full btn btn-primary py-4 rounded-2xl font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform"
-                    >
-                        View Cached Shifts
-                    </Link>
-
+                <div className="flex flex-col gap-3 pt-2">
                     <button
                         onClick={() => window.location.reload()}
-                        className="block w-full bg-white text-gray-700 py-4 rounded-2xl font-bold border border-gray-100 hover:bg-gray-50 transition-colors"
+                        className="btn btn-primary w-full gap-2"
                     >
-                        Try Reconnecting
+                        <RefreshCw className="w-4 h-4" />
+                        Try Again
                     </button>
+                    <Link href="/" className="btn btn-secondary w-full gap-2">
+                        <Home className="w-4 h-4" />
+                        Go to Dashboard
+                    </Link>
                 </div>
             </div>
+
+            <p className="text-xs text-gray-400 mt-8">
+                Market ON Internal System &bull; v1.0
+            </p>
         </div>
     );
 }

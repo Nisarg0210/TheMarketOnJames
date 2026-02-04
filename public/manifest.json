@@ -1,25 +1,31 @@
 {
-    "name": "The Market ON - Internal",
+    "name": "The Market ON",
     "short_name": "MarketON",
-    "description": "Internal inventory and scheduling system for Market ON",
+    "description": "Internal inventory and staff management system",
     "start_url": "/",
     "scope": "/",
     "display": "standalone",
     "orientation": "portrait",
-    "background_color": "#f8fafc",
-    "theme_color": "#2563eb",
+    "background_color": "#1e293b",
+    "theme_color": "#1e293b",
     "icons": [
         {
-            "src": "/icon.png",
+            "src": "/icons/icon-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any maskable"
         },
         {
-            "src": "/icon-512.png",
+            "src": "/icons/icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/splash-screen.png",
+            "sizes": "1024x1024",
+            "type": "image/png",
+            "purpose": "any"
         }
     ],
     "shortcuts": [
@@ -28,17 +34,17 @@
             "url": "/schedule/my-shifts",
             "icons": [
                 {
-                    "src": "/icon.png",
+                    "src": "/icons/icon-192x192.png",
                     "sizes": "192x192"
                 }
             ]
         },
         {
             "name": "Inventory",
-            "url": "/inventory",
+            "url": "/inventory/products",
             "icons": [
                 {
-                    "src": "/icon.png",
+                    "src": "/icons/icon-192x192.png",
                     "sizes": "192x192"
                 }
             ]
