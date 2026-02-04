@@ -7,9 +7,11 @@ export default withAuth(
         const path = req.nextUrl.pathname;
 
         // Admin-only routes
-        const adminRoutes = ["/admin", "/inventory/categories", "/inventory/products"];
+        const adminRoutes = ["/admin"];
         // Manager+ routes
         const managerRoutes = ["/schedules/manage"];
+
+        // Note: Inventory routes are now open to all authenticated employees based on user request
 
         if (adminRoutes.some(route => path.startsWith(route)) && token?.role !== "admin" && token?.role !== "manager") {
             return NextResponse.redirect(new URL("/", req.url));
