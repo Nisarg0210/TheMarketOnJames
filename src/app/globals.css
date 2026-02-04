@@ -149,15 +149,12 @@ body {
   touch-action: manipulation;
 }
 
+/* Reverting custom select to ensure visibility */
 select.input {
-  appearance: none;
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
-  background-position: right 0.5rem center;
-  background-repeat: no-repeat;
-  background-size: 1.5em 1.5em;
-  padding-right: 2.5rem;
   display: block;
-  /* Ensure it's not flex which can break select on iOS */
+  /* Ensure it's not flex */
+  padding-right: 0.75rem;
+  /* Reset padding */
 }
 
 @media (min-width: 768px) {

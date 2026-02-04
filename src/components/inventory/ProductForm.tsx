@@ -64,12 +64,19 @@ export default function ProductForm({ categories }: { categories: Category[] }) 
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <label className="block text-sm font-medium mb-1">Category</label>
-                        <select name="categoryId" className="input" required defaultValue="" disabled={loading}>
-                            <option value="" disabled>Select a category</option>
+                        <select name="categoryId" className="input" required defaultValue="" disabled={loading || categories.length === 0}>
+                            <option value="" disabled>
+                                {categories.length === 0 ? "No categories found" : "Select a category"}
+                            </option>
                             {categories.map(c => (
                                 <option key={c.id} value={c.id}>{c.name}</option>
                             ))}
                         </select>
+                        {categories.length === 0 && (
+                            <p className="text-xs text-red-500 mt-1">
+                                Create categories in Inventory Settings first.
+                            </p>
+                        )}
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">Initial Stock (Qty)</label>
