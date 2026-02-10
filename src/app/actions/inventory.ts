@@ -77,6 +77,7 @@ export async function createProduct(formData: FormData) {
         await logAudit(userId, "CREATE_PRODUCT", `Created product: ${name}${initialQty > 0 ? ` with ${initialQty} initial stock` : ""}`, product.id, "Product");
         revalidatePath("/inventory/products");
         revalidatePath("/inventory");
+        revalidatePath("/");
         return { success: true };
     } catch (error) {
         console.error(error);
@@ -148,6 +149,7 @@ export async function createBatch(formData: FormData) {
 
         revalidatePath("/inventory");
         revalidatePath("/inventory/products");
+        revalidatePath("/");
     } catch (error) {
         console.error(error);
         return { error: "Failed to create batch" };

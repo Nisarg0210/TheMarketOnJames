@@ -4,6 +4,8 @@ import { addDays, startOfDay, isBefore, isAfter } from "date-fns";
 import { Package, AlertTriangle, Calendar, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const now = startOfDay(new Date());
   const tomorrow = addDays(now, 1);
