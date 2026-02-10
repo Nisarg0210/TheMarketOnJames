@@ -106,15 +106,24 @@ export default function ProductForm({ categories }: { categories: Category[] }) 
                     </div>
 
                     {trackExpiry && (
-                        <div className="pl-6 animate-in fade-in slide-in-from-top-1">
-                            <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">Expire Date</label>
-                            <input
-                                type="date"
-                                name="expiryDate"
-                                className="input h-9"
-                                required={trackExpiry}
-                                disabled={loading}
-                            />
+                        <div className="pl-6 animate-in fade-in slide-in-from-top-1 space-y-3">
+                            <div className="p-3 bg-blue-50 border border-blue-100 rounded-xl">
+                                <p className="text-xs text-blue-700 font-medium mb-1">📋 Dashboard Tip</p>
+                                <p className="text-xs text-blue-600">
+                                    Products appear on the dashboard only when they have inventory batches.
+                                    Add initial stock above to create a batch, or add stock later via "Add Inventory".
+                                </p>
+                            </div>
+                            <div>
+                                <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">Expire Date</label>
+                                <input
+                                    type="date"
+                                    name="expiryDate"
+                                    className="input h-9"
+                                    required={trackExpiry}
+                                    disabled={loading}
+                                />
+                            </div>
                         </div>
                     )}
                 </div>
